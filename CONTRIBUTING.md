@@ -1,6 +1,6 @@
 # 贡献指南 (Contributing Guide)
 
-感谢你对 MC 联机器的关注！我们欢迎任何形式的贡献。
+感谢你对 EneriCraft 的关注！我们欢迎任何形式的贡献。
 
 ## 行为准则
 
@@ -45,7 +45,7 @@
 ## 项目结构
 
 ```
-mc-connector/
+EneriCraft/
 ├── client/        # Tauri 桌面客户端
 ├── server/        # Go 服务端
 ├── protocol/      # 通信协议定义

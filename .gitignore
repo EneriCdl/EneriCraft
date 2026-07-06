@@ -6,12 +6,12 @@ node_modules/
 dist/
 target/
 build/
+mc-connector.exe
 
 # IDE
 .idea/
 .vscode/*
 !.vscode/extensions.json
-!.vscode/settings.json
 *.swp
 *.swo
 *~
@@ -21,19 +21,16 @@ build/
 Thumbs.db
 *.tmp
 
-# Rust
-*.pdb
-*.rs.bk
-
 # Go
-server/signaling/signaling
-server/relay/relay
 vendor/
+*.exe~
+
+# Frontend embed cache
+internal/web/dist/
 
 # Env
 .env
 .env.local
-.env.*.local
 
 # Logs
 *.log
@@ -43,7 +40,6 @@ logs/
 servers/
 world/
 world_*/
-logs/latest.log
 
 # Misc
 *.zip
