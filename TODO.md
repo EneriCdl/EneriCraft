@@ -3,7 +3,6 @@
 > 2026-07-06 更新 | 架构：Go 后端 + 内嵌 React 前端 | 单 exe 文件
 >
 > 🆕 **架构重构：从 Paper 开服 → Open to LAN + P2P 隧道。**
-> 详见 [重构方案](C:\Users\xuzhi\.claude\plans\silly-herding-sedgewick.md)
 
 ---
 

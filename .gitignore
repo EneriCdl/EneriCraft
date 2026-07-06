@@ -41,6 +41,33 @@ servers/
 world/
 world_*/
 
+# Privacy (do not commit)
+docs/BUSINESS_MODEL.md
+.claude/
+
+# Build binaries
+EneriCraft.exe
+relay-server*
+signal-server*
+*.exe
+
+# Release packages
+release/
+
+# External tools
+hmcl/
+authlib-injector.jar
+
+# Test temp files
+cmd/bridgetest/
+cmd/detecttest/
+cmd/javatest/
+cmd/lantest/
+cmd/relaytest/
+cmd/servertest/
+cmd/usernametest/
+cmd/versioncheck/
+
 # Misc
 *.zip
 *.tar.gz
