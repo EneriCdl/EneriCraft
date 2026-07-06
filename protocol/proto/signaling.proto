@@ -1,0 +1,98 @@
+// MC 联机器 — 信令协议定义
+//
+// 信令服务器用于协调客户端之间的连接建立。
+// 在零服务器模式下不使用，但作为可选增强功能预留。
+
+syntax = "proto3";
+
+package mc_connector.signaling;
+
+option go_package = "github.com/mc-connector/protocol/signaling";
+
+// ============================================================
+// 消息类型
+// ============================================================
+
+// 顶层消息封装
+message Message {
+  oneof payload {
+    // 房间相关
+    CreateRoomRequest create_room_req = 1;
+    CreateRoomResponse create_room_res = 2;
+    JoinRoomRequest join_room_req = 3;
+    JoinRoomResponse join_room_res = 4;
+    LeaveRoomRequest leave_room_req = 5;
+
+    // 信令相关
+    SignalMessage signal_msg = 10;
+
+    // 心跳
+    Heartbeat heartbeat = 20;
+
+    // 错误
+    ErrorMessage error = 99;
+  }
+}
+
+// ============================================================
+// 房间管理
+// ============================================================
+
+message CreateRoomRequest {
+  string room_name = 1;
+  string mc_version = 2;
+  string mod_manifest_hash = 3;
+  uint32 max_players = 4;
+}
+
+message CreateRoomResponse {
+  string room_code = 1;  // 6位房间码
+  uint32 expires_in_secs = 2;  // 过期时间
+}
+
+message JoinRoomRequest {
+  string room_code = 1;
+  string player_name = 2;
+}
+
+message JoinRoomResponse {
+  bool success = 1;
+  string host_endpoint = 2;  // 主机 QUIC 地址
+  string error_message = 3;
+}
+
+message LeaveRoomRequest {
+  string room_code = 1;
+}
+
+// ============================================================
+// 信令消息
+// ============================================================
+
+// NAT 穿透协调
+message SignalMessage {
+  enum Type {
+    UNKNOWN = 0;
+    OFFER = 1;   // 主机发送连接 Offer
+    ANSWER = 2;  // 客户端回复 Answer
+    CANDIDATE = 3;  // ICE Candidate
+  }
+  Type type = 1;
+  string from_peer_id = 2;
+  string to_peer_id = 3;
+  bytes payload = 4;  // SDP / Candidate data
+}
+
+// ============================================================
+// 心跳 & 错误
+// ============================================================
+
+message Heartbeat {
+  uint64 timestamp = 1;
+  uint32 players_online = 2;
+}
+
+message ErrorMessage {
+  uint32 code = 1;
+  string message = 2;
+}

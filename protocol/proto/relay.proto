@@ -1,0 +1,56 @@
+// MC 联机器 — 中继协议定义
+//
+// 当中继服务器用于兜底转发数据包时使用。
+// 仅在 P2P 直连失败时启用。
+
+syntax = "proto3";
+
+package mc_connector.relay;
+
+option go_package = "github.com/mc-connector/protocol/relay";
+
+// ============================================================
+// 中继消息
+// ============================================================
+
+// 会话控制
+message RelayControl {
+  oneof action {
+    // 创建中继会话
+    CreateSession create = 1;
+    // 加入已有会话
+    JoinSession join = 2;
+    // 关闭会话
+    CloseSession close = 3;
+    // 心跳
+    RelayHeartbeat heartbeat = 10;
+  }
+}
+
+message CreateSession {
+  string session_id = 1;  // 房间码作为会话 ID
+  uint32 max_bandwidth_kbps = 2;  // 最大带宽 (Kbps)
+}
+
+message JoinSession {
+  string session_id = 1;
+}
+
+message CloseSession {
+  string session_id = 1;
+  string reason = 2;
+}
+
+message RelayHeartbeat {
+  uint64 timestamp = 1;
+  uint64 bytes_sent = 2;
+  uint64 bytes_received = 3;
+}
+
+// 数据转发
+message RelayData {
+  string session_id = 1;
+  uint32 sequence = 2;  // 包序号（用于丢包检测）
+  bytes payload = 3;
+  uint64 timestamp_ms = 4;
+}

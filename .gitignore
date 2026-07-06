@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+target/
+build/
+
+# IDE
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+*.tmp
+
+# Rust
+*.pdb
+*.rs.bk
+
+# Go
+server/signaling/signaling
+server/relay/relay
+vendor/
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
+
+# MC Server
+servers/
+world/
+world_*/
+logs/latest.log
+
+# Misc
+*.zip
+*.tar.gz
