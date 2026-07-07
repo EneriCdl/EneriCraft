@@ -2,7 +2,7 @@
   "name": "mc-connector",
   "private": true,
   "version": "0.9.0",
-  "description": "EneriCraft — 零服务器成本、P2P直连、一键联机",
+  "description": "EneriCraft — P2P+中继混合联机、一键创建房间、永久免费",
   "type": "module",
   "scripts": {
     "dev": "vite",

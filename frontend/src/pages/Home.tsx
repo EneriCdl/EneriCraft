@@ -119,7 +119,7 @@ export default function Home() {
           <span className="text-gray-800 dark:text-white">Craft</span>
         </h1>
         <p className="text-gray-500 dark:text-gray-400 text-sm">
-          零服务器 · P2P 直连 · 连接码交换 · 永久免费
+          P2P 优先 · 中继兜底 · 连接码交换 · 永久免费
         </p>
       </div>
 
