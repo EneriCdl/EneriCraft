@@ -43,8 +43,12 @@ func (a *APIHandler) CreateRoom(w http.ResponseWriter, r *http.Request) {
 	if mcVersion == "" || !isCleanMCVersion(mcVersion) {
 		v, u := detectRunningMC(); if v != "" { mcVersion, username = v, u }
 	}
-	if mcVersion == "" || !isCleanMCVersion(mcVersion) {
-		writeError(w, 400, "未检测到运行中的 Minecraft，请先打开游戏"); return
+	if mcVersion == "" {
+		mcVersion = "未知" // LAN 模式不强制要求版本号
+	}
+	if req.Mode == "lan" && mcVersion == "未知" {
+		// LAN 模式下版本检测不到也可以创建，仅提示
+		log.Printf("[创建房间] 未检测到MC版本，使用未知版本")
 	}
 	log.Printf("[创建房间] MC版本: %s, 用户: %s, 模式: %s", mcVersion, username, req.Mode)
 

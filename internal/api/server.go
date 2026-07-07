@@ -8,6 +8,8 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+
+	mcserver "github.com/mc-connector/internal/server"
 )
 
 type ServerStatus struct {
@@ -80,7 +82,7 @@ func (a *APIHandler) DetectVersions(w http.ResponseWriter, r *http.Request) {
 
 	// 也列出所有已安装版本
 	var versions []map[string]interface{}
-	searchPaths := []string{"D:/.minecraft", "E:/.minecraft", "E:\\PCL\\.minecraft", "D:\\PCL\\.minecraft"}
+	searchPaths := mcserver.GetAllMinecraftDirs()
 	if appdata := os.Getenv("APPDATA"); appdata != "" {
 		searchPaths = append(searchPaths, filepath.Join(appdata, ".minecraft"))
 	}
@@ -233,11 +235,7 @@ func isCleanMCVersion(vid string) bool {
 
 // detectRecentVersion 找最近修改过的纯 MC release 版本目录
 func detectRecentVersion() (version string, minecraftDir string) {
-	searchPaths := []string{"E:\\PCL\\.minecraft", "D:/.minecraft", "E:/.minecraft"}
-	if appdata := os.Getenv("APPDATA"); appdata != "" {
-		searchPaths = append(searchPaths, filepath.Join(appdata, ".minecraft"))
-	}
-
+	searchPaths := mcserver.GetAllMinecraftDirs()
 	var bestVer string
 	var bestDir string
 	var bestTime int64
@@ -283,10 +281,7 @@ func detectProcessOnly() (version string, minecraftDir string) {
 
 // getLatestFromFiles 从文件系统获取最新纯数字 release 版本号
 func getLatestFromFiles() string {
-	searchPaths := []string{"E:/PCL/.minecraft", "D:/.minecraft", "E:/.minecraft"}
-	if appdata := os.Getenv("APPDATA"); appdata != "" {
-		searchPaths = append(searchPaths, filepath.Join(appdata, ".minecraft"))
-	}
+	searchPaths := mcserver.GetAllMinecraftDirs()
 	var best string
 	for _, mcDir := range searchPaths {
 		entries, err := os.ReadDir(filepath.Join(mcDir, "versions"))
