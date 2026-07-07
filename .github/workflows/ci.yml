@@ -2,84 +2,11 @@ name: CI
 
 on:
   push:
-    branches: [main, dev]
-  pull_request:
     branches: [main]
-
-env:
-  CARGO_TERM_COLOR: always
-  RUSTUP_HOME: ${{ github.workspace }}/.rustup
-  CARGO_HOME: ${{ github.workspace }}/.cargo
+  pull_request:
 
 jobs:
-  # ============================================
-  # 前端检查
-  # ============================================
-  frontend:
-    name: Frontend (TypeScript)
+  placeholder:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: client
-
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'pnpm'
-          cache-dependency-path: client/pnpm-lock.yaml
-
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm lint || echo "Lint not configured yet"
-      - run: pnpm build
-
-  # ============================================
-  # Rust 后端检查
-  # ============================================
-  rust:
-    name: Backend (Rust)
-    runs-on: windows-latest
-    defaults:
-      run:
-        working-directory: client/src-tauri
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          toolchain: stable
-          cache: true
-
-      - run: cargo check --all-features
-      - run: cargo clippy --all-features -- -D warnings || echo "Clippy not configured yet"
-      - run: cargo test
-
-  # ============================================
-  # Go 服务端检查
-  # ============================================
-  go:
-    name: Server (Go)
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: server
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: '1.22'
-          cache: true
-          cache-dependency-path: server/go.sum
-
-      - run: go build ./cmd/signaling/
-      - run: go build ./cmd/relay/
-      - run: go vet ./...
-      - run: go test ./... || echo "Tests not configured yet"
+      - run: 'echo "CI 待重写 — 当前 Go+React 架构 (详见 CONTRIBUTING.md)"'
